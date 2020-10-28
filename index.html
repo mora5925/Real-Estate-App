@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealEstateApp</title>
+  <link rel="icon" type="image/png" href="images/favicon.png">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.7/dist/css/uikit.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+    <div class="header-div">
+      <img src="images/Landmark (8).png">
+    </div>
+  </header>
+  <div class="uk-container">
+    <form class="search">
+      <!-- override some css for city input-->
+      <input style="color: black !important;" id="input" class="city submit uk-input" type="text" placeholder="city">
+
+      <select class="state uk-select">
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="DC">District Of Columbia</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="IL">Illinois</option>
+        <option value="IN">Indiana</option>
+        <option value="IA">Iowa</option>
+        <option value="KS">Kansas</option>
+        <option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option>
+        <option value="ME">Maine</option>
+        <option value="MD">Maryland</option>
+        <option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option>
+        <option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option>
+        <option value="MO">Missouri</option>
+        <option value="MT">Montana</option>
+        <option value="NE">Nebraska</option>
+        <option value="NV">Nevada</option>
+        <option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option>
+        <option value="NM">New Mexico</option>
+        <option value="NY">New York</option>
+        <option value="NC">North Carolina</option>
+        <option value="ND">North Dakota</option>
+        <option value="OH">Ohio</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        <option value="SD">South Dakota</option>
+        <option value="TN">Tennessee</option>
+        <option value="TX">Texas</option>
+        <option value="UT">Utah</option>
+        <option value="VT">Vermont</option>
+        <option value="VA">Virginia</option>
+        <option value="WA">Washington</option>
+        <option value="WV">West Virginia</option>
+        <option value="WI">Wisconsin</option>
+        <option value="WY">Wyoming</option>
+      </select>
+
+      <select class="beds-min uk-select">
+        <option value="1">Beds: 1+</option>
+        <option value="2">Beds: 2+</option>
+        <option value="3">Beds: 3+</option>
+      </select>
+      <select class="baths-min uk-select">
+        <option value="1">Baths: 1+</option>
+        <option value="2">Baths: 2+</option>
+        <option value="3">Baths: 3+</option>
+      </select>
+      <select class="price-max uk-select">
+        <option value="900">$900</option>
+        <option value="1000">$1000</option>
+        <option value="1100">$1100</option>
+        <option value="1200">$1200</option>
+        <option value="1300">$1300</option>
+        <option value="1400">$1400</option>
+        <option value="1500">$1500</option>
+        <option value="2000">$2000</option>
+        <option value="2500">$2500</option>
+      </select>
+      <select class="results-limit uk-select">
+        <option value="24">24 results</option>
+        <option value="48">48 results</option>
+        <option value="96">96 results</option>
+      </select>
+      <button type="submit" class="submit uk-button" style="margin-top: 10px">submit</button><br>
+    </form>
+
+    <!-- this is where all the results will go -->
+    <div id="searchResults" class="uk-grid-column-small uk-grid-row-large uk-child-width-1-3@s uk-text-center" uk-grid>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.7/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.7/dist/js/uikit-icons.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="js/script.js"></script>
+
+
+  <!-- START MORE INFO MODAL -->
+  <div id="modal-close-default" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <button class="uk-modal-close-default" type="button" uk-close></button>
+      <div class="uk-container hide slideshowContainer">
+        <div uk-slideshow="animation: push" style="margin: 0 auto;">
+          <h1 class="slideshow-h1"></h1>
+          <h3 class="slideshow-h3"></h3>
+          <p class="property-desc"></p>
+          <div class="uk-grid-small uk-child-width-expand@s uk-text-center" uk-grid>
+            <div>
+              <div class="uk-card uk-card-default uk-card-body property-info"></div>
+            </div>
+            <div>
+              <div class="uk-card uk-card-default uk-card-body additional-info"></div>
+            </div>
+          </div>
+          <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+            <ul class="uk-slideshow-items"></ul>
+            <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous
+              uk-slideshow-item="previous"></a>
+            <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next
+              uk-slideshow-item="next"></a>
+          </div>
+          <ul class="uk-slideshow-nav uk-dotnav uk-flex-center uk-margin"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- END MODAL -->
+
+  <!-- error modal -->
+  <div id="my-id" class="uk-flex-top" uk-modal>
+    <div class="uk-modal-dialog uk-margin-auto-vertical">
+      <p class="error-text">Please enter a City.</p>
+    </div>
+  </div>
+  <!-- end error modal -->
+
+
+
+  <footer id="footer">
+    <h4 style="color:white">Copyright® |
+      <a href="https://github.com/j-nederveld/Real-Estate-App.git">
+        <svg width="24" height="24" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d=" M 375 1000C 375 950 376 899 376 857C 250 880 218 826 208 798C 202 784 178 740 156 728C 139 718 114 695 156 695C 195 694 223 731 233 746C 278 821 349 800 378 787C 383 755 396 733 410 720C 299 708 183 665 183 473C 183 419 202 374 234 339C 229 327 211 275 239 207C 239 207 281 194 376 258C 416 247 459 241 501 241C 544 241 586 247 626 258C 722 193 764 207 764 207C 791 275 774 327 769 339C 801 374 820 418 820 473C 820 665 703 708 592 720C 610 736 626 766 626 813C 626 866 625 950 625 1000" />
+        </svg>
+      </a>
+    </h4>
+  </footer>
+</body>
+</html>
